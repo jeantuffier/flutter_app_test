@@ -11,6 +11,7 @@ class ListComponentItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container (
       margin: EdgeInsets.all(8),
+      color: Colors.grey,
       child: Image.network(item.thumbnailUrl),
     );
   }

@@ -54,10 +54,11 @@ class _ListComponentState extends State<ListComponent> {
             );
           }
           return ListView.builder(
+            itemCount: state.items.length,
+            scrollDirection: Axis.horizontal,
             itemBuilder: (BuildContext context, int index) {
               return ListComponentItemWidget(item: state.items[index]);
             },
-            itemCount: state.items.length,
           );
         }
         return Container();

@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Infinite Scroll',
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Posts'),
+          title: Text('Flutter app test'),
         ),
         //body: InfiniteLoadingList(),
         body: ListComponent(title: "Test title", height: 255),
