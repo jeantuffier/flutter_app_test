@@ -12,7 +12,7 @@ class ListComponentItemWidget extends StatelessWidget {
     return Container (
       margin: EdgeInsets.all(8),
       color: Colors.grey,
-      child: Image.network(item.thumbnailUrl),
+      child: Image.network(item.url),
     );
   }
 }

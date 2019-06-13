@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_test/infiniteloadinglist/inifinite_loading_list.dart';
 import 'package:flutter_app_test/listcomponent/list_component.dart';
+import 'package:flutter/rendering.dart';
 
 void main() {
+  debugPaintSizeEnabled=false;
   runApp(MyApp());
 }
 
@@ -16,7 +18,19 @@ class MyApp extends StatelessWidget {
           title: Text('Flutter app test'),
         ),
         //body: InfiniteLoadingList(),
-        body: ListComponent(title: "Test title", height: 255),
+        body: Column(
+          children: [
+            ListComponent(
+              title: "List Component Title",
+              height: 255,
+            ),
+            ListComponent(
+              title: "List Component Title",
+              subTitle: "Subtitle",
+              height: 255,
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -22,7 +22,6 @@ class ListComponent extends StatefulWidget {
 }
 
 class _ListComponentState extends State<ListComponent> {
-
   final ListComponentBloc _bloc = ListComponentBloc(httpClient: http.Client());
 
   @override
@@ -33,36 +32,60 @@ class _ListComponentState extends State<ListComponent> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<ListComponentState>(
-      stream: _bloc.stream,
-      builder: (context, snapshot) {
-        final state = snapshot.data;
-        if (state is ListComponentUninitialized) {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-        if (state is ListComponent) {
-          return Center(
-            child: Text('failed to fetch items'),
-          );
-        }
-        if (state is ListComponentLoaded) {
-          if (state.items.isEmpty) {
-            return Center(
-              child: Text('no items'),
-            );
-          }
-          return ListView.builder(
-            itemCount: state.items.length,
-            scrollDirection: Axis.horizontal,
-            itemBuilder: (BuildContext context, int index) {
-              return ListComponentItemWidget(item: state.items[index]);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Expanded(
+              child: Text(
+                widget._title,
+                style: Theme.of(context).textTheme.title,
+              ),
+            ),
+            Text(
+              "View more",
+              style: Theme.of(context).textTheme.button,
+            ),
+            Icon(Icons.keyboard_arrow_right),
+          ],
+        ),
+        widget._subTitle != null ? Text(widget._subTitle) : Container(),
+        Container(
+          height: widget._height,
+          child: StreamBuilder<ListComponentState>(
+            stream: _bloc.stream,
+            builder: (context, snapshot) {
+              final state = snapshot.data;
+              if (state is ListComponentUninitialized) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              if (state is ListComponent) {
+                return Center(
+                  child: Text('failed to fetch items'),
+                );
+              }
+              if (state is ListComponentLoaded) {
+                if (state.items.isEmpty) {
+                  return Center(
+                    child: Text('no items'),
+                  );
+                }
+                return ListView.builder(
+                  itemCount: state.items.length,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ListComponentItemWidget(item: state.items[index]);
+                  },
+                );
+              }
+              return Container();
             },
-          );
-        }
-        return Container();
-      },
+          ),
+        ),
+      ],
     );
   }
 
@@ -72,7 +95,7 @@ class _ListComponentState extends State<ListComponent> {
     super.dispose();
   }
 
-  /*StreamBuilder _buildFromStream() {
+/*StreamBuilder _buildFromStream() {
     return StreamBuilder<List<T>>(
       stream: widget._streamController.stream,
       initialData: [],
