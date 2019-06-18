@@ -3,16 +3,17 @@ import 'package:flutter_app_test/listcomponent/list_component_item.dart';
 
 class ListComponentItemWidget extends StatelessWidget {
 
-  final ListComponentItem item;
+  final ListComponentItem _item;
+  final EdgeInsets _margin;
 
-  ListComponentItemWidget({this.item});
+  ListComponentItemWidget(this._item, this._margin);
 
   @override
   Widget build(BuildContext context) {
     return Container (
-      margin: EdgeInsets.all(8),
+      margin: _margin,
       color: Colors.grey,
-      child: Image.network(item.url),
+      child: Image.network(_item.url),
     );
   }
 }

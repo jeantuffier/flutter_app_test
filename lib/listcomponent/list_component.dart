@@ -77,7 +77,8 @@ class _ListComponentState extends State<ListComponent> {
                   itemCount: state.items.length,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (BuildContext context, int index) {
-                    return ListComponentItemWidget(item: state.items[index]);
+                    final margin = getMargin(index, state.items.length);
+                    return ListComponentItemWidget(state.items[index], margin);
                   },
                 );
               }
@@ -89,64 +90,25 @@ class _ListComponentState extends State<ListComponent> {
     );
   }
 
+  EdgeInsets getMargin(int index, int max) {
+    double left, right = 0;
+    if (index == 0) {
+      left = 8;
+      right = 4;
+    } else if (index == max - 1) {
+      left = 4;
+      right = 8;
+    } else {
+      left = 4;
+      right = 4;
+    }
+
+    return EdgeInsets.fromLTRB(left, 8, right, 8);
+  }
+
   @override
   void dispose() {
     _bloc.dispose();
     super.dispose();
   }
-
-/*StreamBuilder _buildFromStream() {
-    return StreamBuilder<List<T>>(
-      stream: widget._streamController.stream,
-      initialData: [],
-      builder: (context, snapshot) {
-        return Column(
-          children: <Widget>[
-            ListHeaderWidget<T>(
-              widget._title,
-              widget._subTitle,
-            ),
-            Container(
-              margin: EdgeInsets.only(bottom: 16),
-              height: 200,
-              child: _getContent(snapshot.data),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  Widget _getContent(List<T> items) {
-    return items.isEmpty ? _getProgressView() : _getListView(items);
-  }
-
-  ListView _getListView(List<T> items) {
-    return ListView.builder(
-      scrollDirection: Axis.horizontal,
-      itemBuilder: (BuildContext context, int index) {
-        return widget._widgetBuilder.buildSimpleWidget(items[index]);
-      },
-      itemCount: items.length > 20 ? 20 : items.length,
-    );
-  }
-
-  Container _getProgressView() {
-    return Container(
-      alignment: Alignment.center,
-      child: Center(
-        child: SizedBox(
-          width: 33,
-          height: 33,
-          child: CircularProgressIndicator(),
-        ),
-      ),
-    );
-  }
-
-  @override
-  void dispose() {
-    widget._dispose();
-    super.dispose();
-  }*/
 }
